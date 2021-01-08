@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const userServices = require('../user/user.services');
 const prisma = new PrismaClient();
 
 const find = async () => {
@@ -9,9 +10,9 @@ const findById = async (id) => {
   return await prisma.post.findUnique({ where: { id: Number(id) } });
 };
 
-const create = async (title, content) => {
+const create = async (title, content, authorId) => {
   return await prisma.post.create({
-    data: { title, content },
+    data: { title, content, author: { connect: { id: Number(authorId) } } },
   });
 };
 

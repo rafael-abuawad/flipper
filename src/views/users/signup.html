@@ -1,0 +1,21 @@
+<h2>{{ title }}</h2>
+
+{% if message %}
+<p>{{ message | capitalize }}</p>
+<hr />
+{% endif %}
+
+<form method="post">
+  <label for="name">
+    <input name="name" type="text" placeholder="Name" required />
+  </label>
+  <label for="email">
+    <input name="email" type="email" placeholder="E-Mail" required />
+  </label>
+  <label for="password">
+    <input name="password" type="password" placeholder="Password" required />
+  </label>
+  <input type="submit" value="Signup" />
+</form>
+
+<a href="/users/login"> Already have an account? Login </a>

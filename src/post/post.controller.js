@@ -1,8 +1,9 @@
 const { Router } = require('express');
+const { loginGuard } = require('../auth/auth.guards');
 const postServices = require('./post.services');
 const router = Router();
 
-router.get('', async (req, res) => {
+router.get('/', loginGuard, async (req, res) => {
   const posts = await postServices.find();
   res.render('posts/posts', {
     title: 'Posts',
@@ -13,18 +14,24 @@ router.get('', async (req, res) => {
 
 router
   .route('/create')
-  .get((req, res) => {
+  .get(loginGuard, (req, res) => {
     res.render('posts/create', {
       title: 'Create post',
       message: req.query.message,
     });
   })
-  .post(async (req, res) => {
+  .post(loginGuard, async (req, res) => {
     try {
       const { title, content } = req.body;
       if (title && content) {
-        const post = await postServices.create(title, content);
-        res.redirect('/posts/' + post.id);
+        const authorId = req.session.userId;
+        try {
+          const post = await postServices.create(title, content, authorId);
+          res.redirect('/posts/' + post.id);
+        } catch (err) {
+          const message = "author doesn't exists".replace(/ /g, '+');
+          res.redirect('/posts/create?message=' + message);
+        }
       } else {
         const message = 'title or content are missing'.replace(/ /g, '+');
         res.redirect('/posts/create?message=' + message);
@@ -35,7 +42,7 @@ router
     }
   });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', loginGuard, async (req, res) => {
   try {
     const post = await postServices.findById(req.params.id);
     res.render('posts/post', { title: post.title, post });

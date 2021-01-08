@@ -6,6 +6,7 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 
 const postController = require('./post/post.controller');
+const userController = require('./user/user.controller');
 
 const app = express();
 
@@ -42,6 +43,7 @@ nunjucks.configure(app.get('views'), {
 
 // App routes
 app.use('/posts', postController);
+app.use('/users', userController);
 
 app.listen(app.get('port'), () =>
   console.log(`App listening on http://localhost:${app.get('port')}`)
