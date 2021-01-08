@@ -11,7 +11,14 @@ const findById = async (id) => {
   const author = await prisma.post
     .findUnique({ where: { id: Number(id) } })
     .author();
-  return { ...post, author };
+  return {
+    ...post,
+    author: {
+      id: author.id,
+      name: author.name,
+      email: author.email,
+    },
+  };
 };
 
 const create = async (title, content, authorId) => {
@@ -20,17 +27,10 @@ const create = async (title, content, authorId) => {
   });
 };
 
-const update = async (id, title, content) => {
+const update = async (id, title, content, published) => {
   return await prisma.post.update({
     where: { id: Number(id) },
-    data: { title, content },
-  });
-};
-
-const updatePublished = async (id, title, content) => {
-  return await prisma.post.update({
-    where: { id: Number(id) },
-    data: { published: true },
+    data: { title, content, published },
   });
 };
 
@@ -40,4 +40,4 @@ const remove = async (id) => {
   });
 };
 
-module.exports = { find, findById, create, update, updatePublished, remove };
+module.exports = { find, findById, create, update, remove };

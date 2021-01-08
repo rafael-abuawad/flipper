@@ -25,6 +25,13 @@ const login = async (email, password) => {
   return null;
 };
 
+const update = async (id, name) => {
+  return await prisma.user.update({
+    where: { id: Number(id) },
+    data: { name },
+  });
+};
+
 const remove = async (id) => {
   return await prisma.user.delete({
     where: {
@@ -37,6 +44,7 @@ module.exports = {
   find,
   findById,
   create,
+  update,
   login,
   remove,
 };

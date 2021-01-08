@@ -10,6 +10,9 @@ const appController = require('./app.controller');
 const postController = require('./post/post.controller');
 const userController = require('./user/user.controller');
 
+const postApiController = require('./post/post.controller-api');
+const userApiController = require('./user/user.controller-api');
+
 const app = express();
 
 // App constants
@@ -46,6 +49,8 @@ nunjucks.configure(app.get('views'), {
 // App routes
 app.use('/posts', postController);
 app.use('/users', userController);
+app.use('/api/posts', postApiController);
+app.use('/api/users', userApiController);
 app.use('/', appController);
 
 app.listen(app.get('port'), () =>
