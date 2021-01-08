@@ -1,0 +1,21 @@
+<h1>{{ title }}</h1>
+<a href="/posts/create">
+  <button>Create post</button>
+</a>
+<hr />
+
+{% if message %}
+<p>{{ message | capitalize }}</p>
+<hr />
+{% endif %}
+
+<ul>
+  {% for post in posts %}
+  <li>
+    <p>Title: {{ post.title }}</p>
+    <p>Content: {{ post.content }}</p>
+  </li>
+  {% else %}
+  <p>There are no posts</p>
+  {% endfor %}
+</ul>

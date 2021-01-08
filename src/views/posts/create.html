@@ -1,0 +1,17 @@
+<h2>Create post</h2>
+<div>
+  <form action="/posts/create" method="post">
+    <label for="title">
+      <input name="title" type="text" placeholder="Title" />
+    </label>
+    <label for="content">
+      <textarea name="content" cols="30" rows="10"></textarea>
+    </label>
+    <input type="submit" value="Post!" />
+  </form>
+</div>
+
+{% if message %}
+<hr />
+<p>{{ message | capitalize }}</p>
+{% endif %}

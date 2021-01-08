@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const nunjucks = require('nunjucks');
 const path = require('path');
 
+const postController = require('./post/post.controller');
+
 const app = express();
 
 // App constants
@@ -33,15 +35,13 @@ app.use(
 app.use(morgan(app.get('enviroment') == 'production' ? 'common' : 'dev'));
 
 // App view engine
-nunjucks.configure(app.get('view engine'), {
+nunjucks.configure(app.get('views'), {
   autoescape: true,
   express: app,
 });
 
 // App routes
-app.get('/', (req, res) => {
-  res.send('Base route');
-});
+app.use('/posts', postController);
 
 app.listen(app.get('port'), () =>
   console.log(`App listening on http://localhost:${app.get('port')}`)
