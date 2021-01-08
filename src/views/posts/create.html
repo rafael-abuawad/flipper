@@ -1,17 +1,33 @@
-<h2>Create post</h2>
-<div>
-  <form action="/posts/create" method="post">
-    <label for="title">
-      <input name="title" type="text" placeholder="Title" />
-    </label>
-    <label for="content">
-      <textarea name="content" cols="30" rows="10"></textarea>
-    </label>
-    <input type="submit" value="Post!" />
-  </form>
-</div>
+{% extends "layouts/default.html" %} {% block content %}
+<section>
+  <h2>Create post</h2>
+</section>
 
-{% if message %}
-<hr />
-<p>{{ message | capitalize }}</p>
-{% endif %}
+<section>
+  {% if message %}
+  <div>
+    <p>{{ message | capitalize }}</p>
+  </div>
+  {% endif %}
+</section>
+
+<section>
+  <form action="/posts/create" method="post">
+    <div>
+      <label for="title">Title: </label>
+      <div>
+        <input name="title" type="text" placeholder="Title" />
+      </div>
+    </div>
+    <div>
+      <label for="content">Content: </label>
+      <div>
+        <textarea name="content" cols="30" rows="10"></textarea>
+      </div>
+    </div>
+    <div>
+      <button type="submit">Create post</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

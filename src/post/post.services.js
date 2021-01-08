@@ -7,7 +7,11 @@ const find = async () => {
 };
 
 const findById = async (id) => {
-  return await prisma.post.findUnique({ where: { id: Number(id) } });
+  const post = await prisma.post.findUnique({ where: { id: Number(id) } });
+  const author = await prisma.post
+    .findUnique({ where: { id: Number(id) } })
+    .author();
+  return { ...post, author };
 };
 
 const create = async (title, content, authorId) => {

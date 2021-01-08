@@ -1,21 +1,44 @@
-<h2>{{ title }}</h2>
+<section>
+  <h2>{{ title }}</h2>
+</section>
 
-{% if message %}
-<p>{{ message | capitalize }}</p>
-<hr />
-{% endif %}
+<section>
+  {% if message %}
+  <div>
+    <p>{{ message | capitalize }}</p>
+  </div>
+  {% endif %}
+</section>
 
-<form method="post">
-  <label for="name">
-    <input name="name" type="text" placeholder="Name" required />
-  </label>
-  <label for="email">
-    <input name="email" type="email" placeholder="E-Mail" required />
-  </label>
-  <label for="password">
-    <input name="password" type="password" placeholder="Password" required />
-  </label>
-  <input type="submit" value="Signup" />
-</form>
+<section>
+  <form method="post">
+    <div>
+      <label for="name">Name: </label>
+      <div>
+        <input name="name" type="text" placeholder="Name" required />
+      </div>
+    </div>
+    <div>
+      <label for="email">Email: </label>
+      <div>
+        <input name="email" type="email" placeholder="E-Mail" required />
+      </div>
+    </div>
+    <div>
+      <label for="password">Password: </label>
+      <div>
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+    </div>
+    <div>
+      <button type="submit">Login</button>
+    </div>
+  </form>
+</section>
 
 <a href="/users/login"> Already have an account? Login </a>

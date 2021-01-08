@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {% if title %}
+    <title>{{ title }} | Flipper</title>
+    {% else %}
+    <title>Flipper</title>
+    {% endif %}
+  </head>
+  <body>
+    <nav>
+      <div>
+        <a href="/">
+          <strong>
+            <h3>Flipper</h3>
+          </strong>
+        </a>
+      </div>
+      <ul>
+        <li>
+          <a href="/posts/create">
+            <button>Create post</button>
+          </a>
+        </li>
+        <li>
+          <a href="/users/profile">
+            <button>
+              <strong>Profile</strong>
+            </button>
+          </a>
+        </li>
+        <li>
+          <form action="/users/logout" method="post">
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+      </ul>
+    </nav>
+    <hr />
+
+    {% block content %} {% endblock %}
+  </body>
+</html>

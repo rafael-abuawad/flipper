@@ -15,7 +15,6 @@ router
     if (email && password) {
       const user = await userService.login(email, password);
       if (user) {
-        // TODO: redirect to the feed page
         req.session.userId = user.id;
         res.redirect('/' + next);
       } else {
@@ -38,9 +37,8 @@ router
     if (name && email && password) {
       try {
         const user = await userService.create(name, email, password);
-        // TODO: redirect to the feed page
         req.session.userId = user.id;
-        res.redirect('/users/' + user.id);
+        res.redirect('/');
       } catch (err) {
         const message = 'email already in use'.replace(/ /g, '+');
         res.redirect('/users/signup?message=' + message);
@@ -50,6 +48,27 @@ router
       res.redirect('/users/signup?message=' + message);
     }
   });
+
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.redirect('/');
+    } else {
+      res.clearCookie('flipper');
+      res.redirect('/users/login');
+    }
+  });
+});
+
+router.get('/profile', loginGuard, async (req, res) => {
+  try {
+    const user = await userService.findById(req.session.userId);
+    res.render('users/user', { title: user.name, user });
+  } catch (err) {
+    const message = 'user not found'.replace(/ /g, '+');
+    res.redirect('/users/login?message=' + message);
+  }
+});
 
 router.get('/:id', loginGuard, async (req, res) => {
   try {

@@ -1,2 +1,40 @@
-<h2>{{ post.title }}</h2>
-<p>{{ post.content }}</p>
+{% extends "layouts/default.html" %} {% block content %}
+<section>
+  <h2>Post: {{ title }}</h2>
+</section>
+
+<section>
+  {% if message %}
+  <div>
+    <p>{{ message | capitalize }}</p>
+  </div>
+  {% endif %}
+</section>
+
+<section>
+  <div style="border-style: dotted; padding: 1.5rem">
+    <div>
+      <p>Title: <strong>{{ post.title }}</strong></p>
+      <p>Content: <strong>{{ post.content }}</strong></p>
+      <div>
+        Author:
+        <ul>
+          <li>Name: <strong>{{ post.author.name }}</strong></li>
+          <li>Email: <strong>{{ post.author.email }}</strong></li>
+          <li><a href="/users/{{ post.author.id }}">Author profile</a></li>
+        </ul>
+      </div>
+    </div>
+    {% if post.author.id == userId %}
+    <div>
+      <form action="">
+        <button disabled>Edit</button>
+      </form>
+      <form action="/posts/{{ post.id }}/delete" method="post">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

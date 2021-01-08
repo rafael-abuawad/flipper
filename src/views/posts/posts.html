@@ -1,21 +1,26 @@
-<h1>{{ title }}</h1>
-<a href="/posts/create">
-  <button>Create post</button>
-</a>
-<hr />
+{% extends "layouts/default.html" %} {% block content %}
+<section>
+  <h2>{{ title }}</h2>
+</section>
 
-{% if message %}
-<p>{{ message | capitalize }}</p>
-<hr />
-{% endif %}
+<section>
+  {% if message %}
+  <div>
+    <p>{{ message | capitalize }}</p>
+  </div>
+  {% endif %}
+</section>
 
-<ul>
+<section>
   {% for post in posts %}
-  <li>
-    <p>Title: {{ post.title }}</p>
-    <p>Content: {{ post.content }}</p>
-  </li>
-  {% else %}
-  <p>There are no posts</p>
+  <div style="border-style: dotted; padding: 1.5rem; margin-bottom: 1.5rem">
+    <div>
+      <a href="/posts/{{ post.id }}">
+        <p>Title: <strong>{{ post.title }}</strong></p>
+      </a>
+      <p>Content: <strong>{{ post.content }}</strong></p>
+    </div>
+  </div>
   {% endfor %}
-</ul>
+</section>
+{% endblock %}

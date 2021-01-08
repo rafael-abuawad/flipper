@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -5,6 +6,7 @@ const morgan = require('morgan');
 const nunjucks = require('nunjucks');
 const path = require('path');
 
+const appController = require('./app.controller');
 const postController = require('./post/post.controller');
 const userController = require('./user/user.controller');
 
@@ -44,6 +46,7 @@ nunjucks.configure(app.get('views'), {
 // App routes
 app.use('/posts', postController);
 app.use('/users', userController);
+app.use('/', appController);
 
 app.listen(app.get('port'), () =>
   console.log(`App listening on http://localhost:${app.get('port')}`)

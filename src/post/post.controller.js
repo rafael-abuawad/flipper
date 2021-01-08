@@ -9,6 +9,7 @@ router.get('/', loginGuard, async (req, res) => {
     title: 'Posts',
     posts,
     message: req.query.message,
+    userId: req.session.userId,
   });
 });
 
@@ -18,6 +19,7 @@ router
     res.render('posts/create', {
       title: 'Create post',
       message: req.query.message,
+      userId: req.session.userId,
     });
   })
   .post(loginGuard, async (req, res) => {
@@ -42,10 +44,24 @@ router
     }
   });
 
-router.get('/:id', loginGuard, async (req, res) => {
+router.route('/:id').get(loginGuard, async (req, res) => {
   try {
     const post = await postServices.findById(req.params.id);
-    res.render('posts/post', { title: post.title, post });
+    res.render('posts/post', {
+      title: post.title,
+      post,
+      userId: req.session.userId,
+    });
+  } catch (err) {
+    const message = "post coulnd't be found".replace(/ /g, '+');
+    res.redirect('/posts/?message=' + message);
+  }
+});
+
+router.post('/:id/delete', loginGuard, async (req, res) => {
+  try {
+    await postServices.remove(req.params.id);
+    res.redirect('/posts');
   } catch (err) {
     const message = "post coulnd't be found".replace(/ /g, '+');
     res.redirect('/posts/?message=' + message);
