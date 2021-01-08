@@ -1,7 +1,7 @@
 {
-  "name": "express-starter",
-  "version": "0.0.2",
-  "description": "Basic, but useful Express JS starter app template. This template includes express, express-session, morgan, nunjucks as the templating engine, prettier as the formater, and Prisma as the ORM. ",
+  "name": "flipper",
+  "version": "0.0.1",
+  "description": "A fullstack Twitter clone",
   "main": "src/app.js",
   "scripts": {
     "dev": "nodemon -e html,js --watch src",
