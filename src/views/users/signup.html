@@ -1,44 +1,114 @@
-<section>
-  <h2>{{ title }}</h2>
-</section>
-
-<section>
-  {% if message %}
-  <div>
-    <p>{{ message | capitalize }}</p>
+{% extends "layouts/protected.html" %} {% block content %}
+<div class="columns">
+  <div class="column pb-0 is-hidden-touch">
+    <section class="hero is-link is-fullheight">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Flipper</h1>
+          <h2 class="subtitle">Fullstack twitter clone</h2>
+        </div>
+      </div>
+    </section>
   </div>
-  {% endif %}
-</section>
+  <div class="column pb-0">
+    <section class="hero is-link is-hidden-desktop">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Flipper</h1>
+          <h2 class="subtitle">Fullstack twitter clone</h2>
+        </div>
+      </div>
+    </section>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container">
+          <div
+            class="is-flex is-flex-direction-column is-justify-content-center is-align-center"
+          >
+            <div class="is-hidden-touch">
+              <h2 class="title">
+                <strong>Signup</strong>
+              </h2>
+              <hr />
+            </div>
+            <div>
+              <form method="post">
+                <div class="field">
+                  <label class="label" for="name">Name</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      name="name"
+                      type="text"
+                      placeholder="Name"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label" for="email">Email</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      name="email"
+                      type="email"
+                      placeholder="E-Mail"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <label class="label" for="password">Password</label>
+                  <div>
+                    <input
+                      class="input"
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <button
+                      class="button is-link is-light is-fullwidth"
+                      type="submit"
+                    >
+                      Signup
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            {% if message %}
+            <div>
+              <hr />
+              <div class="notification is-warning is-light">
+                {{ message | capitalize }}
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="hero-foot pb-5">
+        <div class="container">
+          <div class="has-text-centered">
+            <a href="/users/login"> Already have an account? Login </a>
+            <p>
+              Developed by
+              <a
+                class="is-italic"
+                href="https://github.com/rafael-abuawad/flipper"
+                >rafael-abuawad</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
-<section>
-  <form method="post">
-    <div>
-      <label for="name">Name: </label>
-      <div>
-        <input name="name" type="text" placeholder="Name" required />
-      </div>
-    </div>
-    <div>
-      <label for="email">Email: </label>
-      <div>
-        <input name="email" type="email" placeholder="E-Mail" required />
-      </div>
-    </div>
-    <div>
-      <label for="password">Password: </label>
-      <div>
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-        />
-      </div>
-    </div>
-    <div>
-      <button type="submit">Login</button>
-    </div>
-  </form>
-</section>
-
-<a href="/users/login"> Already have an account? Login </a>
+{% endblock %}

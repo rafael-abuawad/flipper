@@ -10,36 +10,43 @@
     {% else %}
     <title>Flipper</title>
     {% endif %}
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
   </head>
   <body>
-    <nav>
-      <div>
-        <a href="/">
-          <strong>
-            <h3>Flipper</h3>
-          </strong>
-        </a>
-      </div>
-      <ul>
-        <li>
-          <a href="/posts/create">
-            <button>Create post</button>
+    <header>
+      <nav>
+        <div>
+          <a href="/">
+            <strong>
+              <h3>Flipper</h3>
+            </strong>
           </a>
-        </li>
-        <li>
-          <a href="/users/profile">
-            <button>
-              <strong>Profile</strong>
-            </button>
-          </a>
-        </li>
-        <li>
-          <form action="/users/logout" method="post">
-            <button type="submit">Logout</button>
-          </form>
-        </li>
-      </ul>
-    </nav>
+        </div>
+        <ul>
+          <li>
+            <a href="/posts/create">
+              <button>Create post</button>
+            </a>
+          </li>
+          <li>
+            <a href="/users/profile">
+              <button>
+                <strong>Profile</strong>
+              </button>
+            </a>
+          </li>
+          <li>
+            <form action="/users/logout" method="post">
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </nav>
+    </header>
     <hr />
 
     {% block content %} {% endblock %}
