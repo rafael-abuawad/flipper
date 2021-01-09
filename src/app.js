@@ -7,20 +7,20 @@ const nunjucks = require('nunjucks');
 const path = require('path');
 
 const appController = require('./app.controller');
-const postController = require('./post/post.controller');
-const userController = require('./user/user.controller');
+const postController = require('./modules/post/post.controller');
+const userController = require('./modules/user/user.controller');
 
-const authApiController = require('./auth/auth.controller-api');
-const postApiController = require('./post/post.controller-api');
-const userApiController = require('./user/user.controller-api');
+const authApiController = require('./modules/auth/auth.controller-api');
+const postApiController = require('./modules/post/post.controller-api');
+const userApiController = require('./modules/user/user.controller-api');
 
 const app = express();
 
 // App constants
 app.set('port', process.env.PORT || 8080);
 app.set('enviroment', process.env.NODE_ENV || 'development');
-app.set('views', path.join(__dirname, '../views'));
-app.set('static', path.join(__dirname, '../static'));
+app.set('views', path.join(__dirname, 'views'));
+app.set('static', path.join(__dirname, 'static'));
 app.set('view engine', 'html');
 app.set('session secret', process.env.SESSION_SECRET || 'secret');
 app.set('session name', process.env.SESSION_NAME || 'flipper');
