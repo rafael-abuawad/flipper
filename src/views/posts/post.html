@@ -1,40 +1,51 @@
 {% extends "layouts/default.html" %} {% block content %}
-<section>
-  <h2>Post: {{ title }}</h2>
-</section>
+<div class="mt-5">
+  <h2 class="title">Post: {{ title }}</h2>
+</div>
+<hr />
 
-<section>
-  {% if message %}
-  <div>
-    <p>{{ message | capitalize }}</p>
-  </div>
-  {% endif %}
-</section>
+{% if message %}
+<div>
+  <div class="notification is-warning is-light">{{ message | capitalize }}</div>
+  <hr />
+</div>
+{% endif %}
 
-<section>
-  <div style="border-style: dotted; padding: 1.5rem">
-    <div>
-      <p>Title: <strong>{{ post.title }}</strong></p>
-      <p>Content: <strong>{{ post.content }}</strong></p>
-      <div>
-        Author:
-        <ul>
-          <li>Name: <strong>{{ post.author.name }}</strong></li>
-          <li>Email: <strong>{{ post.author.email }}</strong></li>
-          <li><a href="/users/{{ post.author.id }}">Author profile</a></li>
-        </ul>
+<div class="box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p style="min-height: 200px">
+          <strong>{{ post.title }}</strong>
+          <br />
+          {{ post.content }}
+        </p>
       </div>
+      {% if post.authorId == userId %}
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <form action="" class="mr-3">
+            <button disabled style="all: unset">
+              <a class="level-item">
+                <span class="icon is-small">
+                  <i class="fas fa-edit" aria-hidden="true"></i>
+                </span>
+              </a>
+            </button>
+          </form>
+          <form action="/posts/{{ post.id }}/delete" method="post">
+            <button type="submit" style="all: unset">
+              <a class="level-item">
+                <span class="icon is-small">
+                  <i class="fas fa-trash" aria-hidden="true"></i>
+                </span>
+              </a>
+            </button>
+          </form>
+        </div>
+      </nav>
+      {% endif %}
     </div>
-    {% if post.author.id == userId %}
-    <div>
-      <form action="">
-        <button disabled>Edit</button>
-      </form>
-      <form action="/posts/{{ post.id }}/delete" method="post">
-        <button type="submit">Delete</button>
-      </form>
-    </div>
-    {% endif %}
-  </div>
-</section>
+  </article>
+</div>
 {% endblock %}

@@ -15,40 +15,56 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
     />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
+    ></script>
   </head>
   <body>
     <header>
-      <nav>
-        <div>
-          <a href="/">
-            <strong>
-              <h3>Flipper</h3>
-            </strong>
+      <nav class="navbar is-black">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img
+              src="https://bulma.io/images/bulma-logo-white.png"
+              width="112"
+              height="28"
+            />
           </a>
         </div>
-        <ul>
-          <li>
-            <a href="/posts/create">
-              <button>Create post</button>
+        <div class="navbar-menu is-active">
+          <div class="navbar-start">
+            <a class="navbar-item" href="/posts"> Posts </a>
+            <div class="navbar-item">
+              <div class="buttons">
+                <a href="/posts/create">
+                  <button class="button is-info is-light">Create post</button>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-end">
+            <a class="navbar-item" href="/users/profile">
+              <strong>Profile</strong>
             </a>
-          </li>
-          <li>
-            <a href="/users/profile">
-              <button>
-                <strong>Profile</strong>
-              </button>
-            </a>
-          </li>
-          <li>
-            <form action="/users/logout" method="post">
-              <button type="submit">Logout</button>
-            </form>
-          </li>
-        </ul>
+            <div class="navbar-item">
+              <form action="/users/logout" method="post">
+                <button
+                  style="all: unset"
+                  class="has-text-white is-clickable"
+                  type="submit"
+                >
+                  Logout
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
-    <hr />
 
-    {% block content %} {% endblock %}
+    <main>
+      <div class="container is-fluid">{% block content %} {% endblock %}</div>
+    </main>
   </body>
 </html>
