@@ -1,7 +1,7 @@
 {
-  "name": "flipper",
-  "version": "0.0.1",
-  "description": "A fullstack Twitter clone",
+  "name": "post-it",
+  "version": "0.0.2",
+  "description": "A fullstack post notes app",
   "main": "src/app.js",
   "scripts": {
     "dev": "nodemon -e html,js --watch src",

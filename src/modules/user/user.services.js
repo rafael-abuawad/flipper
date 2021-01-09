@@ -7,7 +7,9 @@ const find = async () => {
 };
 
 const findById = async (id) => {
-  return await prisma.user.findUnique({ where: { id: Number(id) } });
+  const user = await prisma.user.findUnique({ where: { id: Number(id) } });
+  const posts = await prisma.post.findMany({ where: { authorId: user.id }})
+  return { ...user, posts };
 };
 
 const create = async (name, email, password) => {

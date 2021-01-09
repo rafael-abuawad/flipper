@@ -1,6 +1,10 @@
 {% extends "layouts/default.html" %} {% block content %}
 <div class="mt-5">
-  <h2 class="title">Profile</h2>
+  {% if userId == user.id %}
+    <h2 class="title">Profile</h2>
+  {% else %}
+    <h2 class="title">User #{{ user.id }}</h2>
+  {% endif %}
 </div>
 <hr />
 
@@ -11,16 +15,70 @@
 </div>
 {% endif %}
 
-<section class="section">
-  <div class="card">
-    <div class="card-content">
-      <div class="media">
-        <div class="media-content">
-          <p class="title is-4">{{ user.name }}</p>
-          <p class="subtitle is-6">E-Mail: {{ user.email }}</p>
-        </div>
+<div class="card">
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4">{{ user.name }}</p>
+        <p class="subtitle is-6">E-Mail: {{ user.email }}</p>
       </div>
     </div>
   </div>
-</section>
+</div>
+
+<div class="card mt-5">
+  <div class="card-header">
+    <div class="card-header-title">
+      Posts
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="content is-fluid">
+      <div class="columns">
+      {% for post in user.posts %}
+        <div class="column is-4-desktop is-12-touch">
+          <div class="box">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p style="min-height: 200px">
+          <strong>{{ post.title }}</strong>
+          <br />
+          {{ post.content }}
+        </p>
+      </div>
+      {% if post.authorId == userId %}
+      <nav class="level is-mobile">
+        <div class="level-left">
+          <form action="" class="mr-3">
+            <button disabled style="all: unset">
+              <a class="level-item">
+                <span class="icon is-small">
+                  <i class="fas fa-edit" aria-hidden="true"></i>
+                </span>
+              </a>
+            </button>
+          </form>
+          <form action="/posts/{{ post.id }}/delete" method="post">
+            <button type="submit" style="all: unset">
+              <a class="level-item">
+                <span class="icon is-small">
+                  <i class="fas fa-trash" aria-hidden="true"></i>
+                </span>
+              </a>
+            </button>
+          </form>
+        </div>
+      </nav>
+      {% endif %}
+    </div>
+  </article>
+</div>
+        </div>
+      {% endfor %}
+      </div>
+      
+    </div>
+  </div>
+</div>
 {% endblock %}

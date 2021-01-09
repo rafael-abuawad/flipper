@@ -61,23 +61,28 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/profile', loginGuard, async (req, res) => {
+  const { userId } = req.session
+  res.redirect('/users/' + userId);
+});
+
+router.get('/:id', loginGuard, async (req, res) => {
   try {
-    const user = await userService.findById(req.session.userId);
-    res.render('users/user', { title: user.name, user });
+    const user = await userService.findById(req.params.id);
+    res.render('users/user', { title: user.name, user, userId: req.session.userId, });
   } catch (err) {
     const message = 'user not found'.replace(/ /g, '+');
     res.redirect('/users/login?message=' + message);
   }
 });
 
-router.get('/:id', loginGuard, async (req, res) => {
+router.get('/', loginGuard, async (req, res) => {
   try {
-    const user = await userService.findById(req.params.id);
-    res.render('users/user', { title: user.name, user });
+    const users = await userService.find();
+    res.render('users/users', { title: 'Users', users, userId: req.session.userId, });
   } catch (err) {
-    const message = 'user not found'.replace(/ /g, '+');
+    const message = 'users couldnt be found'.replace(/ /g, '+');
     res.redirect('/users/login?message=' + message);
   }
-});
+})
 
 module.exports = router;
