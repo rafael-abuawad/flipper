@@ -12,9 +12,8 @@
 {% endif %}
 
 <div class="columns">
-  {% for user in users %}
-  {% if user.id != userId %}
-    
+  {% for user in users %} {% if user.id != userId %}
+
   <div class="column is-full">
     <div class="card">
       <div class="card-content">
@@ -29,7 +28,6 @@
       </div>
     </div>
   </div>
-  {% endif %}
-  {% endfor %}
+  {% endif %} {% endfor %}
 </div>
 {% endblock %}

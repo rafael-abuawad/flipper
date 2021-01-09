@@ -8,7 +8,7 @@ const find = async () => {
 
 const findById = async (id) => {
   const user = await prisma.user.findUnique({ where: { id: Number(id) } });
-  const posts = await prisma.post.findMany({ where: { authorId: user.id }})
+  const posts = await prisma.post.findMany({ where: { authorId: user.id } });
   return { ...user, posts };
 };
 
