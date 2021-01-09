@@ -1,3 +1,4 @@
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -20,13 +21,14 @@ model User {
 // Define the `Post` table in the database
 
 model Post {
-  id        Int      @default(autoincrement()) @id
-  published Boolean? @default(false)
-  hasNext Boolean? @default(false)
-  minutesPerBlock  Int   @default(30)
-  blocksCompleted Int      @default(0)
-  title     String
-  description String?
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int? 
+  id                Int      @default(autoincrement()) @id
+  published         Boolean? @default(false)
+  createdAt         DateTime @default(now())
+  hasNext           Boolean? @default(false)
+  minutesPerBlock   Int      @default(30)
+  blocksCompleted   Int      @default(0)
+  title             String
+  description       String?
+  author            User?    @relation(fields: [authorId], references: [id])
+  authorId          Int? 
 }

@@ -25,28 +25,32 @@
                   <strong>{{ post.title }}</strong>
                 </a>
                 <br />
-                {{ post.description | truncate(36)}}
-                <br>
+                {{ post.description | truncate(50)}}
+                <br />
+                <strong>Time per block:</strong> {{ post.minutesPerBlock }}
+                mins.<br />
+                <strong>Blocks completed:</strong> {{ post.blocksCompleted }}<br />
                 {% if post.blocksCompleted == 0 %}
-                  <strong>Time: 0 mins.</strong>
+                <strong>Total: 0 mins.</strong>
                 {% else %}
-                  <strong>Time: {{ post.blocksCompleted * post.minutesPerBlock }} mins.</strong>
+                <strong
+                  >Totla: {{ post.blocksCompleted * post.minutesPerBlock }}
+                  mins.</strong
+                >
                 {% endif %}
               </p>
               {% if post.blocksCompleted == 9 %}
-                <progress
-                  class="progress is-success"
-                  value="9"
-                  max="9"
-                >
-                </progress>
-              {% else %} 
               <progress
-                  class="progress is-link"
-                  value="{{ post.blocksCompleted }}"
-                  max="9"
-                >
-                </progress>
+                class="progress is-success"
+                value="9"
+                max="9"
+              ></progress>
+              {% else %}
+              <progress
+                class="progress is-link"
+                value="{{ post.blocksCompleted }}"
+                max="9"
+              ></progress>
               {% endif %}
             </div>
             {% if post.authorId == userId %}

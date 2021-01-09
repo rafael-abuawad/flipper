@@ -67,7 +67,7 @@ const updateCompleted = async (id, authorId) => {
       });
     }
   } else {
-    throw new Error('User is not authorized to complete this operation')
+    throw new Error('User is not authorized to complete this operation');
   }
 };
 

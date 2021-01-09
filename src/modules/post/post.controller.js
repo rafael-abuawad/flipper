@@ -36,7 +36,7 @@ router
           );
           res.redirect('/posts/' + post.id);
         } catch (err) {
-          console.error(err)
+          console.error(err);
           const message = "author doesn't exists".replace(/ /g, '+');
           res.redirect('/posts/create?message=' + message);
         }
@@ -45,7 +45,7 @@ router
         res.redirect('/posts/create?message=' + message);
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
       const message = "post coulnd't be created".replace(/ /g, '+');
       res.redirect('/posts/create?message=' + message);
     }
@@ -57,11 +57,14 @@ router.route('/:id').get(loginGuard, async (req, res) => {
 
     res.render('posts/post', {
       title: post.title,
-      post,
+      post: {
+        ...post,
+        createdAtString: new Date(post.createdAt).toLocaleString(),
+      },
       userId: req.session.userId,
     });
   } catch (err) {
-    console.error(err)
+    console.error(err);
     const message = "post coulnd't be found".replace(/ /g, '+');
     res.redirect('/posts/?message=' + message);
   }
@@ -73,7 +76,7 @@ router.post('/:id/increment', loginGuard, async (req, res) => {
     await postServices.updateCompleted(req.params.id, authorId);
     res.redirect('/posts');
   } catch (err) {
-    console.error(err)
+    console.error(err);
     const message = "post coulnd't be found".replace(/ /g, '+');
     res.redirect('/posts/?message=' + message);
   }
