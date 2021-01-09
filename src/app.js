@@ -10,6 +10,7 @@ const appController = require('./app.controller');
 const postController = require('./post/post.controller');
 const userController = require('./user/user.controller');
 
+const authApiController = require('./auth/auth.controller-api');
 const postApiController = require('./post/post.controller-api');
 const userApiController = require('./user/user.controller-api');
 
@@ -18,7 +19,8 @@ const app = express();
 // App constants
 app.set('port', process.env.PORT || 8080);
 app.set('enviroment', process.env.NODE_ENV || 'development');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
+app.set('static', path.join(__dirname, '../static'));
 app.set('view engine', 'html');
 app.set('session secret', process.env.SESSION_SECRET || 'secret');
 app.set('session name', process.env.SESSION_NAME || 'flipper');
@@ -26,6 +28,7 @@ app.set('session name', process.env.SESSION_NAME || 'flipper');
 // App middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/static', express.static(app.get('static')));
 app.use(
   session({
     name: app.get('session name'),
@@ -49,6 +52,7 @@ nunjucks.configure(app.get('views'), {
 // App routes
 app.use('/posts', postController);
 app.use('/users', userController);
+app.use('/api/auth', authApiController);
 app.use('/api/posts', postApiController);
 app.use('/api/users', userApiController);
 app.use('/', appController);
