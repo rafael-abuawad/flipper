@@ -21,9 +21,14 @@ const findById = async (id) => {
   };
 };
 
-const create = async (title, content, authorId) => {
+const create = async (title, description, minutesPerBlock, authorId) => {
   return await prisma.post.create({
-    data: { title, content, author: { connect: { id: Number(authorId) } } },
+    data: {
+      title,
+      description,
+      minutesPerBlock: Number(minutesPerBlock),
+      author: { connect: { id: Number(authorId) } },
+    },
   });
 };
 
@@ -34,10 +39,42 @@ const update = async (id, title, content, published) => {
   });
 };
 
+const updateCompleted = async (id, authorId) => {
+  const post = await prisma.post.findUnique({ where: { id: Number(id) } });
+  const blocksCompleted = post.blocksCompleted + 1;
+
+  if (post.authorId === Number(authorId)) {
+    if (blocksCompleted <= 9) {
+      return await prisma.post.update({
+        where: { id: Number(id) },
+        data: { blocksCompleted: blocksCompleted },
+      });
+    } else {
+      // Set the hasNext flag to true
+      await prisma.post.update({
+        where: { id: Number(id) },
+        data: { hasNext: true },
+      });
+      // Create a new PostNote with the same data
+      return await prisma.post.create({
+        data: {
+          title: post.title,
+          description: post.description,
+          minutesPerBlock: post.minPerBlock,
+          blocksCompleted: 1,
+          author: { connect: { id: Number(authorId) } },
+        },
+      });
+    }
+  } else {
+    throw new Error('User is not authorized to complete this operation')
+  }
+};
+
 const remove = async (id) => {
   return await prisma.post.delete({
     where: { id: Number(id) },
   });
 };
 
-module.exports = { find, findById, create, update, remove };
+module.exports = { find, findById, create, update, updateCompleted, remove };

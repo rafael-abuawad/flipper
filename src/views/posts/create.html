@@ -11,7 +11,7 @@
 </div>
 {% endif %}
 
-<section>
+<section class="section pt-0">
   <form action="/posts/create" method="post">
     <div class="field">
       <label class="label" for="title">Title</label>
@@ -26,15 +26,28 @@
       </div>
     </div>
     <div class="field">
-      <label class="label" for="control">Content</label>
+      <label class="label" for="description">Content</label>
       <div class="control">
         <textarea
           class="textarea"
           placeholder="What's on your mind?"
-          name="content"
+          name="description"
           cols="30"
           rows="10"
         ></textarea>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label" for="minutesPerBlock">Time per block</label>
+      <div class="control">
+        <div class="select">
+          <select name="minutesPerBlock">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
       </div>
     </div>
     <div class="field">

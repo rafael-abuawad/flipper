@@ -15,19 +15,39 @@
   <article class="media">
     <div class="media-content">
       <div class="content">
-        <p style="min-height: 200px">
+        <p>
           <strong>{{ post.title }}</strong>
           <br />
-          {{ post.content }}
+          {{ post.description }}
+          <progress
+            class="progress is-link"
+            value="{{ post.blocksCompleted}}"
+            max="9"
+          >
+            {{ (post.blocksCompleted/9) * 100 }}%
+          </progress>
         </p>
       </div>
       {% if post.authorId == userId %}
       <nav class="level is-mobile">
         <div class="level-left">
+          <form
+            action="/posts/{{ post.id }}/increment"
+            method="post"
+            class="mr-3"
+          >
+            <button type="submit" style="all: unset">
+              <a class="level-item">
+                <span class="icon is-small has-text-black">
+                  <i class="fas fa-plus" aria-hidden="true"></i>
+                </span>
+              </a>
+            </button>
+          </form>
           <form action="" class="mr-3">
             <button disabled style="all: unset">
               <a class="level-item">
-                <span class="icon is-small">
+                <span class="icon is-small has-text-black">
                   <i class="fas fa-edit" aria-hidden="true"></i>
                 </span>
               </a>
@@ -36,7 +56,7 @@
           <form action="/posts/{{ post.id }}/delete" method="post">
             <button type="submit" style="all: unset">
               <a class="level-item">
-                <span class="icon is-small">
+                <span class="icon is-small has-text-danger">
                   <i class="fas fa-trash" aria-hidden="true"></i>
                 </span>
               </a>

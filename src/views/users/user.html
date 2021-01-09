@@ -33,47 +33,92 @@
   <div class="card-content">
     <div class="content is-fluid">
       <div class="columns">
-        {% for post in user.posts %}
-        <div class="column is-4-desktop is-12-touch">
-          <div class="box">
-            <article class="media">
-              <div class="media-content">
-                <div class="content">
-                  <p style="min-height: 200px">
-                    <strong>{{ post.title }}</strong>
-                    <br />
-                    {{ post.content }}
-                  </p>
-                </div>
-                {% if post.authorId == userId %}
-                <nav class="level is-mobile">
-                  <div class="level-left">
-                    <form action="" class="mr-3">
-                      <button disabled style="all: unset">
-                        <a class="level-item">
-                          <span class="icon is-small">
-                            <i class="fas fa-edit" aria-hidden="true"></i>
-                          </span>
-                        </a>
-                      </button>
-                    </form>
-                    <form action="/posts/{{ post.id }}/delete" method="post">
-                      <button type="submit" style="all: unset">
-                        <a class="level-item">
-                          <span class="icon is-small">
-                            <i class="fas fa-trash" aria-hidden="true"></i>
-                          </span>
-                        </a>
-                      </button>
-                    </form>
-                  </div>
-                </nav>
+
+    {% for post in user.posts %}
+    <div class="column is-one-quarter-desktop is-full-touch">
+      <div class="box">
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <a href="/posts/{{ post.id }}">
+                  <strong>{{ post.title }}</strong>
+                </a>
+                <br />
+                {{ post.description | truncate(50)}}
+                <br>
+                {% if post.blocksCompleted == 0 %}
+                  <strong>Time: 0 mins.</strong>
+                {% else %}
+                  <strong>Time: {{ post.blocksCompleted * post.minutesPerBlock }} mins.</strong>
                 {% endif %}
+              </p>
+              {% if post.blocksCompleted == 9 %}
+                <progress
+                  class="progress is-success"
+                  value="9"
+                  max="9"
+                >
+                </progress>
+              {% else %} 
+              <progress
+                  class="progress is-link"
+                  value="{{ post.blocksCompleted }}"
+                  max="9"
+                >
+                </progress>
+              {% endif %}
+            </div>
+            {% if post.authorId == userId %}
+            <nav class="level is-mobile">
+              <div class="level-left">
+                {% if post.hasNext == false %}
+                <form
+                  action="/posts/{{ post.id }}/increment"
+                  class="mr-3"
+                  method="post"
+                >
+                  <button type="submit" style="all: unset">
+                    <a class="level-item">
+                      <span class="icon is-small has-text-black">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                      </span>
+                    </a>
+                  </button>
+                </form>
+
+                <form action="" class="mr-3">
+                  <button disabled style="all: unset">
+                    <a class="level-item">
+                      <span class="icon is-small has-text-black">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                      </span>
+                    </a>
+                  </button>
+                </form>
+                {% endif %}
+
+                <form action="/posts/{{ post.id }}/delete" method="post">
+                  <button type="submit" style="all: unset">
+                    <a class="level-item">
+                      <span class="icon is-small has-text-danger">
+                        <i class="fas fa-trash" aria-hidden="true"></i>
+                      </span>
+                    </a>
+                  </button>
+                </form>
               </div>
-            </article>
+            </nav>
+            {% endif %}
           </div>
-        </div>
-        {% endfor %}
+        </article>
+      </div>
+    </div>
+    {% else %}
+    <div class="column is-full">
+      <div class="notification">There are no posts</div>
+    </div>
+    {% endfor %}
       </div>
     </div>
   </div>

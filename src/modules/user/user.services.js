@@ -16,7 +16,7 @@ const create = async (name, email, password) => {
   const salt = bcrypt.genSaltSync(12);
   const hash = bcrypt.hashSync(password, salt);
 
-  return await prisma.user.create({ data: { name, email, hash } });
+  return await prisma.user.create({ data: { name: name.toLowerCase(), email: email.toLowerCase(), hash } });
 };
 
 const login = async (email, password) => {
