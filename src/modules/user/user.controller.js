@@ -22,8 +22,8 @@ router
           const message = 'wrong email or password'.replace(/ /g, '+');
           res.redirect('/users/login?message=' + message);
         }
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error(err);
         const message = 'an error ocurred'.replace(/ /g, '+');
         res.redirect('/users/login?message=' + message);
       }
@@ -45,8 +45,8 @@ router
         const user = await userService.create(name, email, password);
         req.session.userId = user.id;
         res.redirect('/');
-      } catch (error) {
-        console.error(error);
+      } catch (err) {
+        console.error(err);
         const message = 'email already in use'.replace(/ /g, '+');
         res.redirect('/users/signup?message=' + message);
       }
@@ -57,9 +57,9 @@ router
   });
 
 router.post('/logout', (req, res) => {
-  req.session.destroy((error) => {
-    if (error) {
-      console.error(error);
+  req.session.destroy((err) => {
+    if (err) {
+      console.error(err);
       res.redirect('/');
     } else {
       res.clearCookie('flipper');
@@ -81,8 +81,8 @@ router.get('/:id', loginGuard, async (req, res) => {
       user,
       userId: req.session.userId,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     const message = 'user not found'.replace(/ /g, '+');
     res.redirect('/users/login?message=' + message);
   }
@@ -96,8 +96,8 @@ router.get('/', loginGuard, async (req, res) => {
       users,
       userId: req.session.userId,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     const message = 'users couldnt be found'.replace(/ /g, '+');
     res.redirect('/users/login?message=' + message);
   }

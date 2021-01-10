@@ -10,8 +10,8 @@ router.route('/').get(async (req, res) => {
       email: user.email,
     }));
     res.json({ users });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.json({ error: "The request couldn't be completed" });
   }
 });
@@ -28,8 +28,8 @@ router
           email: user.email,
         },
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       res.json({ error: "The request couldn't be completed" });
     }
   })
@@ -44,8 +44,8 @@ router
           email: user.email,
         },
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       res.json({ error: "The request couldn't be completed" });
     }
   })
@@ -59,8 +59,8 @@ router
           email: user.email,
         },
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       res.json({ error: "The request couldn't be completed" });
     }
   });

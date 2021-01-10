@@ -4,13 +4,19 @@ const postServices = require('./post.services');
 const router = Router();
 
 router.get('/', loginGuard, async (req, res) => {
-  const posts = await postServices.find();
-  res.render('posts/posts', {
-    title: 'Posts',
-    posts,
-    message: req.query.message,
-    userId: req.session.userId,
-  });
+  try {
+    const posts = await postServices.find();
+    res.render('posts/posts', {
+      title: 'Posts',
+      posts,
+      message: req.query.message,
+      userId: req.session.userId,
+    });
+  } catch(err) {
+    console.log(err)
+    const message = 'an error ocurred'.replace(/ /g, '+');
+    res.redirect('/posts/create?message=' + message);
+  }
 });
 
 router
@@ -87,6 +93,7 @@ router.post('/:id/delete', loginGuard, async (req, res) => {
     await postServices.remove(req.params.id);
     res.redirect('/posts');
   } catch (err) {
+    console.error(err);
     const message = "post coulnd't be found".replace(/ /g, '+');
     res.redirect('/posts/?message=' + message);
   }
