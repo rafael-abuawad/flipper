@@ -11,7 +11,8 @@ router.route('/').get(async (req, res) => {
     }));
     res.json({ users });
   } catch (error) {
-    res.json({ error });
+    console.error(error);
+    res.json({ error: "The request couldn't be completed" });
   }
 });
 
@@ -28,7 +29,8 @@ router
         },
       });
     } catch (error) {
-      res.json({ error });
+      console.error(error);
+      res.json({ error: "The request couldn't be completed" });
     }
   })
   .put(async (req, res) => {
@@ -43,7 +45,8 @@ router
         },
       });
     } catch (error) {
-      res.json({ error });
+      console.error(error);
+      res.json({ error: "The request couldn't be completed" });
     }
   })
   .delete(async (req, res) => {
@@ -57,7 +60,8 @@ router
         },
       });
     } catch (error) {
-      res.json({ error });
+      console.error(error);
+      res.json({ error: "The request couldn't be completed" });
     }
   });
 

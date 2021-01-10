@@ -13,12 +13,18 @@ router
     const { next = 'posts' } = req.query;
 
     if (email && password) {
-      const user = await userService.login(email, password);
-      if (user) {
-        req.session.userId = user.id;
-        res.redirect('/' + next);
-      } else {
-        const message = 'wrong email or password'.replace(/ /g, '+');
+      try {
+        const user = await userService.login(email, password);
+        if (user) {
+          req.session.userId = user.id;
+          res.redirect('/' + next);
+        } else {
+          const message = 'wrong email or password'.replace(/ /g, '+');
+          res.redirect('/users/login?message=' + message);
+        }
+      } catch (error) {
+        console.error(error);
+        const message = 'an error ocurred'.replace(/ /g, '+');
         res.redirect('/users/login?message=' + message);
       }
     } else {
@@ -39,7 +45,8 @@ router
         const user = await userService.create(name, email, password);
         req.session.userId = user.id;
         res.redirect('/');
-      } catch (err) {
+      } catch (error) {
+        console.error(error);
         const message = 'email already in use'.replace(/ /g, '+');
         res.redirect('/users/signup?message=' + message);
       }
@@ -50,8 +57,9 @@ router
   });
 
 router.post('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
+  req.session.destroy((error) => {
+    if (error) {
+      console.error(error);
       res.redirect('/');
     } else {
       res.clearCookie('flipper');
@@ -73,7 +81,8 @@ router.get('/:id', loginGuard, async (req, res) => {
       user,
       userId: req.session.userId,
     });
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     const message = 'user not found'.replace(/ /g, '+');
     res.redirect('/users/login?message=' + message);
   }
@@ -87,7 +96,8 @@ router.get('/', loginGuard, async (req, res) => {
       users,
       userId: req.session.userId,
     });
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     const message = 'users couldnt be found'.replace(/ /g, '+');
     res.redirect('/users/login?message=' + message);
   }
