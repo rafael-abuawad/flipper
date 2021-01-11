@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const nunjucks = require('nunjucks');
 const path = require('path');
+const jwt = require('express-jwt');
 
 const appController = require('./app.controller');
 const postController = require('./modules/post/post.controller');

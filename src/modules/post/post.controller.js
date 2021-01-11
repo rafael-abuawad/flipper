@@ -12,8 +12,8 @@ router.get('/', loginGuard, async (req, res) => {
       message: req.query.message,
       userId: req.session.userId,
     });
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
     const message = 'an error ocurred'.replace(/ /g, '+');
     res.redirect('/posts/create?message=' + message);
   }
